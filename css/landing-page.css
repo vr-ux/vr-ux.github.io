@@ -176,3 +176,7 @@ p.copyright {
   -webkit-box-shadow: 0px 0px 6px 6px #ccc;
   box-shadow:         0px 0px 6px 6px #ccc;
 }
+
+.small-note{
+    font-size: 0.75em;
+}
