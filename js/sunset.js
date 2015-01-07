@@ -1,3 +1,5 @@
+
+//NEED TO GRACEFULLY LOAD IN WEBGL!!
 $(document).ready(function() {
 
 	var scene, renderer, camera, controls;
