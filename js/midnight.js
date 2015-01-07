@@ -2,27 +2,11 @@ function Midnight() {
   var scene, renderer, camera, controls, container;
   var water, mirrorMesh, waterNormals;
   var canvasHeight;
-  var sun;
   var oceanSize = 20000;
-  var sunStartHeight = 1500;
-  var sunsetHeight = -1500;
-  var timeInc = 1/60;
-
-  var skyColor = new THREE.Color();
-  var startSkyHue = 0.12;
-  var endSkyHue = -0.28;
-  var startSkyLight = 0.5;
-  var endSkyLight = 0.11;
-  var skySat = 0.86;
-  var skyHue = startSkyHue;
-  var skyLight = startSkyLight
-
-  var sunStartScale = 1;
-  var sunEndScale = 2;
-  var sunRadius = 1500;
-  var sunScale =1;
-
+  var timeInc = 1 / 60;
   var scrollOffset;
+
+  var ffGroup;
 
   init()
   animate()
@@ -32,9 +16,10 @@ function Midnight() {
     canvasHeight = window.innerHeight;
 
     camera = new THREE.PerspectiveCamera(55, window.innerWidth / canvasHeight, 1, 20000);
-    camera.position.set(0, 10, -2000);
+    camera.position.set(0, 10, 0);
     scene = new THREE.Scene();
     renderer = new THREE.WebGLRenderer();
+    renderer.sortElements = true;
 
 
     renderer.setSize(window.innerWidth, canvasHeight);
@@ -62,11 +47,39 @@ function Midnight() {
 
     mirrorMesh.add(water);
     mirrorMesh.rotation.x = -Math.PI * 0.5;
+    mirrorMesh.renderDepth = 10;
+
     scene.add(mirrorMesh);
+
+    createFireFlies();
+  }
+
+  function createFireFlies() {
+    ffGroup = new SPE.Group({
+      texture: new THREE.ImageUtils.loadTexture('img/firefly.png'),
+      maxAge: 3
+    });
+
+    var emitter = new SPE.Emitter({
+      position: new THREE.Vector3(0, 10, 0),
+      positionSpread: new THREE.Vector3(100, 20, 300),
+      sizeStart: 20,
+      colorEnd: new THREE.Color(),
+      particleCount: 1000,
+      opacityStart: 0.5,
+      opacityMiddle: 1,
+      opacityEnd: 0.5,
+      velocitySpread: new THREE.Vector3(5, 1, 5),
+      accelerationSpread: new THREE.Vector3(2, 1, 2)
+    })
+
+    ffGroup.addEmitter(emitter);
+    scene.add(ffGroup.mesh);
   }
 
   function animate() {
     requestAnimationFrame(animate);
+    ffGroup.tick();
     water.material.uniforms.time.value += timeInc;
     water.render();
     renderer.render(scene, camera);
