@@ -1,8 +1,5 @@
-
-//NEED TO GRACEFULLY LOAD IN WEBGL!!
-$(document).ready(function() {
-
-	var scene, renderer, camera, controls;
+function Sunset() {
+	var scene, renderer, camera, controls, container;
 	var waterNormals, time, water, mirrorMesh;
 	var canvasHeight;
 	var sun;
@@ -13,11 +10,11 @@ $(document).ready(function() {
 
 	var skyColor = new THREE.Color();
 	var startSkyHue = 0.12;
-	var endSkyHue = -0.18;
+	var endSkyHue = -0.28;
 	var startSkyLight = 0.5;
 	var endSkyLight = 0.11;
 	var skySat = 0.86;
-	var skyHue =  startSkyHue;
+	var skyHue = startSkyHue;
 	var skyLight = startSkyLight
 
 	var scrollOffset;
@@ -29,7 +26,7 @@ $(document).ready(function() {
 
 
 		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 20000);
-		camera.position.set(0, 400, -2000);
+		camera.position.set(0, 10, -2000);
 		scene = new THREE.Scene();
 		renderer = new THREE.WebGLRenderer();
 		skyColor.setHSL(skyHue, skySat, skyLight);
@@ -38,7 +35,7 @@ $(document).ready(function() {
 
 		canvasHeight = window.innerHeight;
 		renderer.setSize(window.innerWidth, canvasHeight);
-		$('#canvas-container').prepend(renderer.domElement);
+    $('#canvas-container').append(renderer.domElement);
 
 
 		var sunGeo = new THREE.CircleGeometry(sunRadius, 64);
@@ -47,7 +44,7 @@ $(document).ready(function() {
 		});
 		sun = new THREE.Mesh(sunGeo, sunMat);
 		sun.position.y = sunStartHeight;
-		sun.position.z = -oceanSize/2.5
+		sun.position.z = -oceanSize * 0.5;
 		scene.add(sun);
 
 		waterNormals = new THREE.ImageUtils.loadTexture('img/waternormals.jpg');
@@ -104,6 +101,7 @@ $(document).ready(function() {
 	});
 
 	function map(value, min1, max1, min2, max2) {
-    return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
-  }
-});
+		return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
+	}
+
+}
