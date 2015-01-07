@@ -5,6 +5,7 @@ function Midnight() {
   var oceanSize = 20000;
   var timeInc = 1 / 60;
   var scrollOffset;
+  var disabled = true;
 
   var ffGroup;
 
@@ -79,6 +80,10 @@ function Midnight() {
 
   function animate() {
     requestAnimationFrame(animate);
+
+    if(disabled){
+      return;
+    }
     ffGroup.tick();
     water.material.uniforms.time.value += timeInc;
     water.render();
@@ -92,6 +97,23 @@ function Midnight() {
     renderer.setSize(window.innerWidth, canvasHeight);
 
   }
+
+  $(window).scroll(function() {
+
+
+    scrollOffset = document.body.scrollTop;
+
+
+
+    if (scrollOffset > canvasHeight + 20) {
+      disabled = false;
+    }
+
+    if(scrollOffset < canvasHeight + 20){
+      disabled = true;
+    }
+
+  });
 
   window.addEventListener('resize', onResize, false);
 

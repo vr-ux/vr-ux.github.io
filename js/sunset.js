@@ -23,6 +23,7 @@ function Sunset() {
 	var sunEndScale = 2;
 	var sunRadius = 1500;
 	var sunScale = 1;
+	var disabled = false;
 
 	var scrollOffset;
 
@@ -79,7 +80,12 @@ function Sunset() {
 	}
 
 	function animate() {
+
 		requestAnimationFrame(animate);
+
+		if(disabled){
+			return;
+		}
 		water.material.uniforms.time.value += timeInc;
 		water.render();
 		renderer.render(scene, camera);
@@ -96,7 +102,22 @@ function Sunset() {
 	window.addEventListener('resize', onResize, false);
 
 	$(window).scroll(function() {
+
+
 		scrollOffset = document.body.scrollTop;
+
+		//We were disabled, either return or reenable if were back up
+		if(disabled ){
+			if(scrollOffset < canvasHeight + 20){
+			  disabled = false;
+			} else{
+				return;
+			}
+		}
+
+		if(scrollOffset > canvasHeight + 20){
+			disabled = true;
+		}
 
 		sun.position.y = Math.min(map(scrollOffset, 0, canvasHeight, sunStartHeight, sunsetHeight), sunStartHeight);
 		skyHue = Math.min(map(scrollOffset, 0, canvasHeight, startSkyHue, endSkyHue), startSkyHue);
@@ -108,11 +129,7 @@ function Sunset() {
 
 		renderer.setClearColor(skyColor);
 
-
-
 	});
-
-
 
 }
 
