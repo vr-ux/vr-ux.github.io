@@ -8,14 +8,14 @@ $(document).ready(function() {
 	var sun;
 	var oceanSize = 20000;
 	var sunRadius = 1100;
-	var sunStartHeight = sunRadius * 2;
-	var sunsetHeight = -sunRadius * 2;
+	var sunStartHeight = sunRadius * 1.5;
+	var sunsetHeight = -sunRadius * 1.5;
 
 	var skyColor = new THREE.Color();
 	var startSkyHue = 0.12;
 	var endSkyHue = -0.18;
 	var startSkyLight = 0.5;
-	var endSkyLight = 1;
+	var endSkyLight = 0.11;
 	var skySat = 0.86;
 	var skyHue =  startSkyHue;
 	var skyLight = startSkyLight
@@ -28,8 +28,8 @@ $(document).ready(function() {
 	function init() {
 
 
-		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-		camera.position.set(0, 400, 1000);
+		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 20000);
+		camera.position.set(0, 400, -2000);
 		scene = new THREE.Scene();
 		renderer = new THREE.WebGLRenderer();
 		skyColor.setHSL(skyHue, skySat, skyLight);
@@ -96,6 +96,7 @@ $(document).ready(function() {
 
 		sun.position.y = Math.min(map(scrollOffset, 0, canvasHeight, sunStartHeight, sunsetHeight, sunStartHeight));
 		skyHue = map(scrollOffset, 0, canvasHeight, startSkyHue, endSkyHue);
+		skyLight = map(scrollOffset, 0, canvasHeight, startSkyLight, endSkyLight);
 		skyColor.setHSL(skyHue, skySat, skyLight);
 		renderer.setClearColor(skyColor);
 
