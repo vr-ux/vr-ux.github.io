@@ -1,26 +1,35 @@
 $(document).ready(function() {
 
-	var scene, renderer, camera, w, h;
+	var scene, renderer, camera, controls;
 	var waterNormals, time, water, mirrorMesh;
+	var sun;
+	var oceanSize = 20000;
+	var sunRadius = 1000;
+	var sunStartHeight = sunRadius * 2;
+	var sunsetHeight = -sunRadius * 2;
 
 	init()
 	animate()
 
 	function init() {
-		w = window.innerWidth;
-		h = window.innerHeight
-		camera = new THREE.PerspectiveCamera(45, w / h, 1, 10000);
-		camera.position.set( 2000, 750, 2000 );
+
+
+		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+		camera.position.set(0, 30, 1000);
 		scene = new THREE.Scene();
 		renderer = new THREE.WebGLRenderer();
-		renderer.setSize(w, h);
+		renderer.setSize(window.innerWidth, window.innerHeight);
 		$('#canvas-container').prepend(renderer.domElement);
 
 
-
-		var mesh = new THREE.Mesh(new THREE.BoxGeometry(10, 10, 10));
-		mesh.position.z = -30;
-		scene.add(mesh);
+		var sunGeo = new THREE.CircleGeometry(sunRadius, 32);
+		var sunMat = new THREE.MeshBasicMaterial({
+			color: 0xff0000
+		});
+		sun = new THREE.Mesh(sunGeo, sunMat);
+		sun.position.y = sunStartHeight;
+		sun.position.z = -oceanSize/3
+		scene.add(sun);
 
 		waterNormals = new THREE.ImageUtils.loadTexture('img/waternormals.jpg');
 		waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
@@ -36,7 +45,7 @@ $(document).ready(function() {
 		});
 
 		mirrorMesh = new THREE.Mesh(
-			new THREE.PlaneBufferGeometry(5000, 5000),
+			new THREE.PlaneBufferGeometry(oceanSize, oceanSize),
 			water.material
 		);
 
@@ -61,4 +70,14 @@ $(document).ready(function() {
 	}
 
 	window.addEventListener('resize', onResize, false);
+
+	$(window).scroll(function() {
+		var pos = map(document.body.scrollTop, 0, 483, sunStartHeight, sunsetHeight )
+		sun.position.y = Math.min(pos, sunStartHeight);
+
+	});
+
+	function map(value, min1, max1, min2, max2) {
+    return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
+  }
 });
