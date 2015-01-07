@@ -1,12 +1,15 @@
+//Should we leave some white space under enath gl canvas or have it full with an arrow pointing down to let user
+//know they can scroll?
+
 function Sunset() {
 	var scene, renderer, camera, controls, container;
 	var waterNormals, time, water, mirrorMesh;
 	var canvasHeight;
 	var sun;
 	var oceanSize = 20000;
-	var sunRadius = 1100;
-	var sunStartHeight = sunRadius * 1.5;
-	var sunsetHeight = -sunRadius * 1.5;
+	var sunRadius = 1300;
+	var sunStartHeight = 1500;
+	var sunsetHeight = -1500;
 
 	var skyColor = new THREE.Color();
 	var startSkyHue = 0.12;
@@ -24,8 +27,9 @@ function Sunset() {
 
 	function init() {
 
+		canvasHeight = window.innerHeight * 0.9;
 
-		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 20000);
+		camera = new THREE.PerspectiveCamera(45, window.innerWidth / canvasHeight, 1, 20000);
 		camera.position.set(0, 10, -2000);
 		scene = new THREE.Scene();
 		renderer = new THREE.WebGLRenderer();
@@ -33,7 +37,6 @@ function Sunset() {
 		renderer.setClearColor(skyColor);
 
 
-		canvasHeight = window.innerHeight;
 		renderer.setSize(window.innerWidth, canvasHeight);
     $('#canvas-container').append(renderer.domElement);
 
@@ -80,9 +83,9 @@ function Sunset() {
 	}
 
 	function onResize() {
-		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.aspect = window.innerWidth / canvasHeight;
 		camera.updateProjectionMatrix();
-		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setSize(window.innerWidth, canvasHeight);
 
 	}
 
