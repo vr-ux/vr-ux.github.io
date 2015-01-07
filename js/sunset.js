@@ -4,12 +4,23 @@ $(document).ready(function() {
 
 	var scene, renderer, camera, controls;
 	var waterNormals, time, water, mirrorMesh;
+	var canvasHeight;
 	var sun;
 	var oceanSize = 20000;
 	var sunRadius = 1100;
 	var sunStartHeight = sunRadius * 2;
 	var sunsetHeight = -sunRadius * 2;
-	var color
+
+	var skyColor = new THREE.Color();
+	var startSkyHue = 0.12;
+	var endSkyHue = -0.18;
+	var startSkyLight = 0.5;
+	var endSkyLight = 1;
+	var skySat = 0.86;
+	var skyHue =  startSkyHue;
+	var skyLight = startSkyLight
+
+	var scrollOffset;
 
 	init()
 	animate()
@@ -21,7 +32,12 @@ $(document).ready(function() {
 		camera.position.set(0, 400, 1000);
 		scene = new THREE.Scene();
 		renderer = new THREE.WebGLRenderer();
-		renderer.setSize(window.innerWidth, window.innerHeight);
+		skyColor.setHSL(skyHue, skySat, skyLight);
+		renderer.setClearColor(skyColor);
+
+
+		canvasHeight = window.innerHeight;
+		renderer.setSize(window.innerWidth, canvasHeight);
 		$('#canvas-container').prepend(renderer.domElement);
 
 
@@ -42,6 +58,7 @@ $(document).ready(function() {
 			textureHeight: 512,
 			waterNormals: waterNormals,
 			alpha: 1.0,
+
 			sunColor: sun.material.color,
 			waterColor: 0x001e0f,
 			distortionScale: 50.0,
@@ -75,8 +92,13 @@ $(document).ready(function() {
 	window.addEventListener('resize', onResize, false);
 
 	$(window).scroll(function() {
-		var pos = map(document.body.scrollTop, 0, 483, sunStartHeight, sunsetHeight )
-		sun.position.y = Math.min(pos, sunStartHeight);
+		scrollOffset = document.body.scrollTop;
+
+		sun.position.y = Math.min(map(scrollOffset, 0, canvasHeight, sunStartHeight, sunsetHeight, sunStartHeight));
+		skyHue = map(scrollOffset, 0, canvasHeight, startSkyHue, endSkyHue);
+		skyColor.setHSL(skyHue, skySat, skyLight);
+		renderer.setClearColor(skyColor);
+
 
 	});
 
