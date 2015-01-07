@@ -7,7 +7,6 @@ function Sunset() {
 	var canvasHeight;
 	var sun;
 	var oceanSize = 20000;
-	var sunRadius = 1300;
 	var sunStartHeight = 1500;
 	var sunsetHeight = -1500;
 
@@ -20,6 +19,11 @@ function Sunset() {
 	var skyHue = startSkyHue;
 	var skyLight = startSkyLight
 
+	var sunStartScale = 1;
+	var sunEndScale = 2;
+	var sunRadius = 1500;
+	var sunScale =1;
+
 	var scrollOffset;
 
 	init()
@@ -27,7 +31,7 @@ function Sunset() {
 
 	function init() {
 
-		canvasHeight = window.innerHeight * 0.9;
+		canvasHeight = window.innerHeight;
 
 		camera = new THREE.PerspectiveCamera(45, window.innerWidth / canvasHeight, 1, 20000);
 		camera.position.set(0, 10, -2000);
@@ -94,11 +98,16 @@ function Sunset() {
 	$(window).scroll(function() {
 		scrollOffset = document.body.scrollTop;
 
-		sun.position.y = Math.min(map(scrollOffset, 0, canvasHeight, sunStartHeight, sunsetHeight, sunStartHeight));
-		skyHue = map(scrollOffset, 0, canvasHeight, startSkyHue, endSkyHue);
-		skyLight = map(scrollOffset, 0, canvasHeight, startSkyLight, endSkyLight);
+		sun.position.y = Math.min(map(scrollOffset, 0, canvasHeight, sunStartHeight, sunsetHeight), sunStartHeight);
+		skyHue = Math.min(map(scrollOffset, 0, canvasHeight, startSkyHue, endSkyHue), startSkyHue);
+		skyLight = Math.min(map(scrollOffset, 0, canvasHeight, startSkyLight, endSkyLight), startSkyLight);
 		skyColor.setHSL(skyHue, skySat, skyLight);
+
+		sunScale = Math.max(map(scrollOffset, 0, canvasHeight, sunStartScale, sunEndScale), sunStartScale);
+		sun.scale.set(sunScale, sunScale, sunScale);
+
 		renderer.setClearColor(skyColor);
+
 
 
 	});
