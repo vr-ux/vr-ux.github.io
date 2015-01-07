@@ -35,22 +35,12 @@ function Midnight() {
     camera.position.set(0, 10, -2000);
     scene = new THREE.Scene();
     renderer = new THREE.WebGLRenderer();
-    skyColor.setHSL(skyHue, skySat, skyLight);
-    renderer.setClearColor(skyColor);
 
 
     renderer.setSize(window.innerWidth, canvasHeight);
     $('#midnight-container').append(renderer.domElement);
 
 
-    var sunGeo = new THREE.CircleGeometry(sunRadius, 64);
-    var sunMat = new THREE.MeshBasicMaterial({
-      color: 0xff0000
-    });
-    sun = new THREE.Mesh(sunGeo, sunMat);
-    sun.position.y = sunStartHeight;
-    sun.position.z = -oceanSize * 0.5;
-    scene.add(sun);
 
     waterNormals = new THREE.ImageUtils.loadTexture('img/waternormals.jpg');
     waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
@@ -61,7 +51,6 @@ function Midnight() {
       waterNormals: waterNormals,
       alpha: 1.0,
 
-      sunColor: sun.material.color,
       waterColor: 0x001e0f,
       distortionScale: 50.0,
     });
