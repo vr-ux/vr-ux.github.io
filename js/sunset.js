@@ -1,14 +1,14 @@
 //Should we leave some white space under enath gl canvas or have it full with an arrow pointing down to let user
 //know they can scroll?
-
 function Sunset() {
 	var scene, renderer, camera, controls, container;
-  var waterNormals, water, mirrorMesh;
+	var water, mirrorMesh, waterNormals;
 	var canvasHeight;
 	var sun;
 	var oceanSize = 20000;
 	var sunStartHeight = 1500;
 	var sunsetHeight = -1500;
+	var timeInc = 1 / 60;
 
 	var skyColor = new THREE.Color();
 	var startSkyHue = 0.12;
@@ -22,7 +22,7 @@ function Sunset() {
 	var sunStartScale = 1;
 	var sunEndScale = 2;
 	var sunRadius = 1500;
-	var sunScale =1;
+	var sunScale = 1;
 
 	var scrollOffset;
 
@@ -33,7 +33,7 @@ function Sunset() {
 
 		canvasHeight = window.innerHeight;
 
-		camera = new THREE.PerspectiveCamera(45, window.innerWidth / canvasHeight, 1, 20000);
+		camera = new THREE.PerspectiveCamera(55, window.innerWidth / canvasHeight, 1, 20000);
 		camera.position.set(0, 10, -2000);
 		scene = new THREE.Scene();
 		renderer = new THREE.WebGLRenderer();
@@ -42,7 +42,7 @@ function Sunset() {
 
 
 		renderer.setSize(window.innerWidth, canvasHeight);
-    $('#sunset-container').append(renderer.domElement);
+		$('#sunset-container').append(renderer.domElement);
 
 
 		var sunGeo = new THREE.CircleGeometry(sunRadius, 64);
@@ -80,7 +80,7 @@ function Sunset() {
 
 	function animate() {
 		requestAnimationFrame(animate);
-		water.material.uniforms.time.value += 1.0 / 60.0;
+		water.material.uniforms.time.value += timeInc;
 		water.render();
 		renderer.render(scene, camera);
 
@@ -112,8 +112,10 @@ function Sunset() {
 
 	});
 
-	function map(value, min1, max1, min2, max2) {
-		return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
-	}
 
+
+}
+
+function map(value, min1, max1, min2, max2) {
+	return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
 }
