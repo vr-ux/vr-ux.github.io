@@ -3,7 +3,7 @@
 
 function Sunset() {
 	var scene, renderer, camera, controls, container;
-	var waterNormals, time, water, mirrorMesh;
+  var waterNormals, water, mirrorMesh;
 	var canvasHeight;
 	var sun;
 	var oceanSize = 20000;
