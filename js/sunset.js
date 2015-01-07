@@ -42,7 +42,7 @@ function Sunset() {
 
 
 		renderer.setSize(window.innerWidth, canvasHeight);
-    $('#canvas-container').append(renderer.domElement);
+    $('#sunset-container').append(renderer.domElement);
 
 
 		var sunGeo = new THREE.CircleGeometry(sunRadius, 64);
