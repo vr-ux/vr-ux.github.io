@@ -14,7 +14,7 @@ function Midnight() {
 
   function init() {
 
-    canvasHeight = window.innerHeight;
+    canvasHeight = window.innerHeight * .3;
 
     camera = new THREE.PerspectiveCamera(55, window.innerWidth / canvasHeight, 1, 20000);
     camera.position.set(0, 10, 0);
@@ -63,11 +63,11 @@ function Midnight() {
 
     var emitter = new SPE.Emitter({
       position: new THREE.Vector3(0, 11, 0),
-      positionSpread: new THREE.Vector3(100, 2, 300),
+      positionSpread: new THREE.Vector3(400, 2, 300),
       sizeStart: 7,
       sizeStartSpread:5,
       colorEnd: new THREE.Color(),
-      particleCount: 50,
+      particleCount: 200,
       opacityStart: 0.0,
       opacityMiddle: 1,
       opacityEnd: 0.0,
