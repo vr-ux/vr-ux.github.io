@@ -11,8 +11,8 @@ function Sunset() {
 	var timeInc = 1 / 60;
 
 	var skyColor = new THREE.Color();
-	var startSkyHue = 0.12;
-	var endSkyHue = -0.28;
+	var startSkyHue = 0.11;
+	var endSkyHue = -0.11;
 	var startSkyLight = 0.5;
 	var endSkyLight = 0.11;
 	var skySat = 0.86;
