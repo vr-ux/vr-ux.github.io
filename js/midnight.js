@@ -7,7 +7,7 @@ function Midnight() {
   var scrollOffset;
   var disabled = true;
 
-  var ffGroup;
+  var ffGroup, starGroup;
 
   init()
   animate()
@@ -53,30 +53,56 @@ function Midnight() {
     scene.add(mirrorMesh);
 
     createFireFlies();
+    createStars();
   }
 
   function createFireFlies() {
     ffGroup = new SPE.Group({
       texture: new THREE.ImageUtils.loadTexture('img/firefly.png'),
-      maxAge: 5
+      maxAge: 2
     });
 
-    var emitter = new SPE.Emitter({
-      position: new THREE.Vector3(0, 11, 0),
-      positionSpread: new THREE.Vector3(400, 2, 300),
+    var ffEmitter = new SPE.Emitter({
+      position: new THREE.Vector3(0, 11, 100),
+      positionSpread: new THREE.Vector3(500, 2, 300),
       sizeStart: 7,
       sizeStartSpread:5,
       colorEnd: new THREE.Color(),
-      particleCount: 200,
+      particleCount: 800,
       opacityStart: 0.0,
       opacityMiddle: 1,
       opacityEnd: 0.0,
       velocitySpread: new THREE.Vector3(2, .1, 2),
-      accelerationSpread: new THREE.Vector3(1, 0.1, 1)
+      accelerationSpread: new THREE.Vector3(2, 0.1, 2)
     })
 
-    ffGroup.addEmitter(emitter);
+    ffGroup.addEmitter(ffEmitter);
     scene.add(ffGroup.mesh);
+
+  }
+
+  function createStars(){
+    starGroup = new SPE.Group({
+      texture: new THREE.ImageUtils.loadTexture('img/smoke.png'),
+      maxAge: 10
+    });
+
+    var starEmitter = new SPE.Emitter({
+      position: new THREE.Vector3(0, 2000, -oceanSize/2),
+      positionSpread: new THREE.Vector3(oceanSize * 10, 6000, 100),
+      particleCount: 10000,
+      opacityStart: 0,
+      opacityMiddle:1,
+      opacityEnd: 0,
+      sizeStart: 100,
+      sizeMiddle: 400,
+      sizeEnd: 100,
+      sizeMiddleSpread: 100
+    });
+
+    starGroup.addEmitter(starEmitter); 
+
+    scene.add(starGroup.mesh);
   }
 
   function animate() {
@@ -86,6 +112,7 @@ function Midnight() {
       return;
     }
     ffGroup.tick();
+    starGroup.tick();
     water.material.uniforms.time.value += timeInc;
     water.render();
     renderer.render(scene, camera);
