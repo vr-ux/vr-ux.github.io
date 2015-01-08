@@ -14,7 +14,7 @@ function Midnight() {
 
   function init() {
 
-    canvasHeight = window.innerHeight * .3;
+    canvasHeight = window.innerHeight * .5;
 
     camera = new THREE.PerspectiveCamera(55, window.innerWidth / canvasHeight, 1, 20000);
     camera.position.set(0, 10, 0);
@@ -63,12 +63,12 @@ function Midnight() {
     });
 
     var ffEmitter = new SPE.Emitter({
-      position: new THREE.Vector3(0, 11, 100),
+      position: new THREE.Vector3(0, 11, -160),
       positionSpread: new THREE.Vector3(500, 2, 300),
       sizeStart: 7,
       sizeStartSpread:5,
       colorEnd: new THREE.Color(),
-      particleCount: 800,
+      particleCount: 2000,
       opacityStart: 0.0,
       opacityMiddle: 1,
       opacityEnd: 0.0,
@@ -88,15 +88,14 @@ function Midnight() {
     });
 
     var starEmitter = new SPE.Emitter({
-      position: new THREE.Vector3(0, 2000, -oceanSize/2),
-      positionSpread: new THREE.Vector3(oceanSize * 10, 7000, 100),
+      position: new THREE.Vector3(0, 2000, -oceanSize/3),
+      positionSpread: new THREE.Vector3(oceanSize * 10, 7000, 5000),
       particleCount: 10000,
       opacityStart: 0,
       opacityMiddle:1,
       opacityEnd: 0,
       sizeStart: 100,
-      sizeMiddle: 400,
-      colorStartSpread: new THREE.Vector3(200, 0, 200),
+      sizeMiddle: 300,
       sizeEnd: 100,
       sizeMiddleSpread: 100
     });
