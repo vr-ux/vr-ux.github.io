@@ -8,6 +8,7 @@ body,
 html {
     width: 100%;
     height: 100%;
+    margin: 0
 }
 
 body,
@@ -204,4 +205,9 @@ p.copyright {
 
 .small-note{
     font-size: 0.75em;
+}
+
+#midnight-container canvas{
+  position: relative;
+  bottom: -4px;
 }
