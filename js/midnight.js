@@ -88,16 +88,16 @@ function Midnight() {
     });
 
     var starEmitter = new SPE.Emitter({
-      position: new THREE.Vector3(0, 2000, -oceanSize/3),
+      position: new THREE.Vector3(0, 2000, -oceanSize/2),
       positionSpread: new THREE.Vector3(oceanSize * 10, 7000, 5000),
       particleCount: 10000,
       opacityStart: 0,
       opacityMiddle:1,
       opacityEnd: 0,
       sizeStart: 100,
-      sizeMiddle: 300,
+      sizeMiddle: 200,
       sizeEnd: 100,
-      sizeMiddleSpread: 100
+      sizeMiddleSpread: 50
     });
 
     starGroup.addEmitter(starEmitter); 
