@@ -59,7 +59,7 @@ function Midnight() {
   function createFireFlies() {
     ffGroup = new SPE.Group({
       texture: new THREE.ImageUtils.loadTexture('img/firefly.png'),
-      maxAge: 2
+      maxAge: 1.7
     });
 
     var ffEmitter = new SPE.Emitter({
@@ -72,8 +72,8 @@ function Midnight() {
       opacityStart: 0.0,
       opacityMiddle: 1,
       opacityEnd: 0.0,
-      velocitySpread: new THREE.Vector3(2, .1, 2),
-      accelerationSpread: new THREE.Vector3(2, 0.1, 2)
+      velocitySpread: new THREE.Vector3(3, .5, 3),
+      // accelerationSpread: new THREE.Vector3(1, 0.1, 1)
     })
 
     ffGroup.addEmitter(ffEmitter);
@@ -84,7 +84,7 @@ function Midnight() {
   function createStars(){
     starGroup = new SPE.Group({
       texture: new THREE.ImageUtils.loadTexture('img/smoke.png'),
-      maxAge: 10
+      maxAge: 7
     });
 
     var starEmitter = new SPE.Emitter({
