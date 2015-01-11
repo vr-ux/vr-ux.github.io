@@ -6,6 +6,7 @@ function Midnight() {
   var timeInc = 1 / 60;
   var scrollOffset;
   var disabled = true;
+  var ball;
 
   var ffGroup, starGroup;
 
@@ -35,7 +36,7 @@ function Midnight() {
       textureWidth: 512,
       textureHeight: 512,
       waterNormals: waterNormals,
-      alpha: 1.0,
+      alpha: 0.99,
 
       waterColor: 0x001e0f,
       distortionScale: 50.0,
@@ -54,6 +55,10 @@ function Midnight() {
 
     createFireFlies();
     createStars();
+    ball = new THREE.Mesh(new THREE.SphereGeometry(1, 64));
+    ball.position.z = -100
+    ball.position.y = -0.5
+    scene.add(ball);
   }
 
   function createFireFlies() {
@@ -116,6 +121,7 @@ function Midnight() {
     water.material.uniforms.time.value += timeInc;
     water.render();
     renderer.render(scene, camera);
+    // ball.position.y += .1
 
   }
 
