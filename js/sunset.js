@@ -37,7 +37,7 @@ function Sunset() {
 		camera = new THREE.PerspectiveCamera(55, window.innerWidth / canvasHeight, 1, 20000);
 		camera.position.set(0, 10, -2000);
 		scene = new THREE.Scene();
-		renderer = new THREE.WebGLRenderer();
+		renderer = new THREE.WebGLRenderer({antialias: true});
 		skyColor.setHSL(skyHue, skySat, skyLight);
 		renderer.setClearColor(skyColor);
 

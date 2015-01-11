@@ -20,7 +20,7 @@ function Midnight() {
     camera = new THREE.PerspectiveCamera(55, window.innerWidth / canvasHeight, 1, 20000);
     camera.position.set(0, 10, 0);
     scene = new THREE.Scene();
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.sortElements = true;
 
 
